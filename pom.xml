@@ -5,7 +5,7 @@
 
 	<groupId>expansion</groupId>
 	<artifactId>EtneralPlaceholders</artifactId>
-	<version>1.0</version>
+	<version>1.0.1</version>
 	<name>EtneralPlaceholders</name>
 	<packaging>jar</packaging>
 
@@ -41,12 +41,6 @@
 						</filter>
 					</filters>
 					<createDependencyReducedPom>false</createDependencyReducedPom>
-					<relocations>
-						<relocation>
-							<pattern>com.syntaxphoenix.syntaxapi</pattern>
-							<shadedPattern>org.playuniverse.spigot.hook.shaded.syntaxapi</shadedPattern>
-						</relocation>
-					</relocations>
 				</configuration>
 			</plugin>
 			<plugin>
