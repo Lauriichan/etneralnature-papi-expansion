@@ -12,7 +12,7 @@ public class EternalNature extends PlaceholderExpansion {
 
 	// We get an instance of the plugin later.
 	private EternalNatureAPI api;
-	
+
 	private final DecimalFormat format = new DecimalFormat("0.00");
 
 	/**
@@ -36,27 +36,11 @@ public class EternalNature extends PlaceholderExpansion {
 	@Override
 	public boolean register() {
 
-		// Make sure "SomePlugin" is on the server
-		if (!canRegister()) {
-			return false;
-		}
+		return canRegister()
+				? ((api = ((me.masstrix.eternalnature.EternalNature) Bukkit.getPluginManager()
+						.getPlugin(getRequiredPlugin())).getApi()) != null ? super.register() : false)
+				: false;
 
-		/*
-		 * "SomePlugin" does not have static methods to access its api so we must create
-		 * a variable to obtain access to it.
-		 */
-		api = ((me.masstrix.eternalnature.EternalNature) Bukkit.getPluginManager().getPlugin(getRequiredPlugin())).getApi();
-
-		// if for some reason we can not get our variable, we should return false.
-		if (api == null) {
-			return false;
-		}
-
-		/*
-		 * Since we override the register method, we need to call the super method to
-		 * actually register this hook
-		 */
-		return super.register();
 	}
 
 	/**
@@ -106,7 +90,7 @@ public class EternalNature extends PlaceholderExpansion {
 	 */
 	@Override
 	public String getVersion() {
-		return "1.0.0";
+		return "1.0.1";
 	}
 
 	/**
@@ -122,17 +106,17 @@ public class EternalNature extends PlaceholderExpansion {
 	 */
 	@Override
 	public String onPlaceholderRequest(Player player, String identifier) {
-
-		if (player == null) {
+		if (player == null)
 			return "";
-		}
-		
-		if (identifier.equals("hydration")) {
+		switch (identifier) {
+		case "hydration":
 			return format.format(api.getUserData(player.getUniqueId()).getHydration());
-		} else if(identifier.equals("temperature")) {
+		case "temperature":
 			return format.format(api.getUserData(player.getUniqueId()).getTemperature());
+		default:
+			return null;
 		}
-		
-		return null;
+
 	}
+	
 }
